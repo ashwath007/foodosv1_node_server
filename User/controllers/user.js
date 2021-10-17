@@ -5,7 +5,58 @@ const Order = require('../../Admin/models/order');
 const axios = require('axios');
 
 
+exports.findUser = (req, res) => {
+    User.findOne({ wa_chatId: req.body.chatId }, (err, gotUser) => {
+        if (err) {
+            console.log(err)
 
+        }
+        if (!gotUser) {
+            res.json({
+                gotUser: null
+            })
+        } else if (gotUser.profile_completed === false) {
+
+            res.json({
+                gotUser: gotUser
+            })
+
+
+        } else {
+            console.log("Here")
+            delivery_msg = "☺️ Ok, It will take ~18 min delivery 🏍️. Please wait ⌚ \n Do you need anything else ?"
+            res.json({
+                gotUser: true,
+                delivery_msg
+            })
+        }
+    })
+
+
+}
+
+exports.adduserLocation = (req, res) => {
+    console.log(req.body)
+    User.findOne({ wa_chatId: req.body.chatId }, (err, gotUser) => {
+        if (err) {
+            console.log(err)
+
+        }
+
+        gotUser.location.coordinates.push(req.body.lat, req.body.lng);
+        gotUser.profile_completed = true;
+        gotUser.save((err, profileComplete) => {
+            if (err) {
+                console.log(err)
+            } else {
+                res.json({
+                    gotUser: profileComplete
+                })
+            }
+        })
+
+    })
+}
 
 
 exports.completeUserProfile = (req, res) => {

@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-const { completeUserProfile, isUserExist, addToCart, summaTestWA, userOrderPayment, removeFromCart, getUserData, getAllProductInCart, getallproductDataFromCart, userOrdernow, showUserOrders } = require('../controllers/user');
+const { completeUserProfile, isUserExist, addToCart, findUser, adduserLocation, summaTestWA, userOrderPayment, removeFromCart, getUserData, getAllProductInCart, getallproductDataFromCart, userOrdernow, showUserOrders } = require('../controllers/user');
 
 
 router.post('/user/create/profile', completeUserProfile);
 router.post('/user/create/showOrder', showUserOrders);
 router.post('/user/exist', isUserExist);
 router.post('/user/getalldata', getUserData);
+router.post('/user/findUserData', findUser);
+router.post('/user/adduserlocation', adduserLocation);
 
 
 router.post('/user/:rasauserId/createprofile');
